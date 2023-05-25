@@ -13,7 +13,7 @@ public class CameraInteraction : MonoBehaviour
     [SerializeField]
     private Transform ObjetoEnMano;
 
-    private bool Ocupado = false;
+    public bool Ocupado = false;
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +45,7 @@ public class CameraInteraction : MonoBehaviour
                 ObjetoEnMano.position = ojos.position; //se coloca en zona de agarre (manos)
                 ObjetoEnMano.GetComponent<Rigidbody>().useGravity = false; //Se retiran las fisicas
                 ObjetoEnMano.GetComponent<Rigidbody>().isKinematic = true;
+                ObjetoEnMano.GetComponent<BoxCollider>().isTrigger = true;//detectar collisiones
                 Ocupado = true; //Objeto en mano
             }if (Input.GetKeyDown(KeyCode.Q) && Ocupado == true)
             {
@@ -53,7 +54,12 @@ public class CameraInteraction : MonoBehaviour
                 ObjetoEnMano.SetParent(null); //Se adhiere a padre (manos)
                 ObjetoEnMano.GetComponent<Rigidbody>().useGravity = true; //Se retiran las fisicas
                 ObjetoEnMano.GetComponent<Rigidbody>().isKinematic = false;
+                ObjetoEnMano.GetComponent<BoxCollider>().isTrigger = false;//detectar collisiones
             }
         }  
+    }
+
+    public void Mensaje(){
+        Debug.Log("MEnsajes");
     }
 }
