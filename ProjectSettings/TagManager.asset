@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Mueble
+  - Comida
+  - Plato
+  - Ventanilla
   layers:
   - Default
   - TransparentFX

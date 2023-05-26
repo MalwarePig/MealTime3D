@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraInteraction : MonoBehaviour
 {
-    public Transform ojos;
+    public Transform Manos;
     private new Transform camera;
 
     [SerializeField]
@@ -39,27 +39,37 @@ public class CameraInteraction : MonoBehaviour
             Debug.Log(hit.transform.name);
             if (Input.GetKeyDown(KeyCode.E) && Ocupado == false)
             {
-                Debug.Log("Chi");
                 ObjetoEnMano = hit.transform;
-                ObjetoEnMano.SetParent(ojos); //Se adhiere a padre (manos)
-                ObjetoEnMano.position = ojos.position; //se coloca en zona de agarre (manos)
+                ObjetoEnMano.SetParent(Manos); //Se adhiere a padre (manos)
+                ObjetoEnMano.position = Manos.position; //se coloca en zona de agarre (manos)
                 ObjetoEnMano.GetComponent<Rigidbody>().useGravity = false; //Se retiran las fisicas
                 ObjetoEnMano.GetComponent<Rigidbody>().isKinematic = true;
-                ObjetoEnMano.GetComponent<BoxCollider>().isTrigger = true;//detectar collisiones
+                ObjetoEnMano.GetComponent<BoxCollider>().isTrigger = true; //detectar collisiones
                 Ocupado = true; //Objeto en mano
-            }if (Input.GetKeyDown(KeyCode.Q) && Ocupado == true)
+            }
+            if (Input.GetKeyDown(KeyCode.Q) && Ocupado == true)
             {
-                Debug.Log("Ño");
                 Ocupado = false;
                 ObjetoEnMano.SetParent(null); //Se adhiere a padre (manos)
                 ObjetoEnMano.GetComponent<Rigidbody>().useGravity = true; //Se retiran las fisicas
                 ObjetoEnMano.GetComponent<Rigidbody>().isKinematic = false;
-                ObjetoEnMano.GetComponent<BoxCollider>().isTrigger = false;//detectar collisiones
+                ObjetoEnMano.GetComponent<BoxCollider>().isTrigger = false; //detectar collisiones
             }
-        }  
+        }
+
+        ComprobarEstado();
     }
 
-    public void Mensaje(){
-        Debug.Log("MEnsajes");
+    private void ComprobarEstado() //Comprueba el estado ocuapdo constantemente
+    {
+        Debug.Log("En manos: " + Manos.childCount);
+        if (Manos.childCount > 0)
+        {
+            Ocupado = true;
+        }
+        else
+        {
+            Ocupado = false;
+        }
     }
 }
